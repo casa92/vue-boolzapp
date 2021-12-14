@@ -126,6 +126,7 @@ ul img {
     margin: 5px 0;
     border-radius: 10px;
     font-size: 12px;
+    overflow-wrap: break-word;
 
 }
 .received {
@@ -138,6 +139,7 @@ ul img {
     margin: 5px 0;
     border-radius: 10px;
     font-size: 12px;
+    overflow-wrap: break-word;
 }
 
 .prova_data {
