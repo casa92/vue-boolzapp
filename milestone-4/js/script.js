@@ -12,6 +12,7 @@ const app = new Vue(
     {
         el: '#root',
         data: {
+            lastAccess: '',
             userFilterText: '',
             currentActiveContact: 0,
             newMessage: '',
@@ -106,7 +107,43 @@ const app = new Vue(
         methods: {
             showThisContact: function(index) {
                 this.currentActiveContact = index;
-            }
+            },
+            sendNewMessage: function() {
+                const newMessageTrimmed = this.newMessage.trim();
+                if (newMessageTrimmed.length > 2) {
+                    this.contacts[this.currentActiveContact].messages.push({
+                        date: dayjs().format("DD/MM/YYYY HH:mm:ss"),
+                        text: newMessageTrimmed,
+                        status: 'sent'
+                    });
+                    this.newMessage = '';
+
+                    setTimeout(() => {
+                        this.contacts[this.currentActiveContact].messages.push({
+                            date: dayjs().format("DD/MM/YYYY HH:mm:ss"),
+                            text: 'ok',
+                            status: 'received'
+                        })
+                    }, 1000);
+                    
+                };
+               
+            },
+            searchFilterText: function() {
+                const newSearchFilterText = this.userFilterText.trim();
+                this.contacts.forEach((element) => {
+                    if( element.name.toLowerCase().includes( newSearchFilterText.toLowerCase())) {
+                        element.visible = true;
+                    } else {
+                        element.visible = false;
+                    }
+                });
+            },
+            lastDateMessage: function() {
+                return this.messages[this.messages.length - 1];
+                
+            },
+            
         },
 
         updated() {
@@ -122,3 +159,4 @@ const app = new Vue(
 )
 
 
+console.log(lastDateMessage);
