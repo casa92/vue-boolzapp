@@ -106,8 +106,25 @@ const app = new Vue(
         methods: {
             showThisContact: function(index) {
                 this.currentActiveContact = index;
-            }
-            
+            },
+            sendNewMessage: function() {
+                const newMessageTrimmed = this.newMessage.trim();
+                if ( newMessageTrimmed.length > 2) {
+                    this.contacts[this.currentActiveContact].messages.push({
+                        date: '',
+                        text: newMessageTrimmed,
+                        status: 'sent'
+                    });
+                    this.newMessage = '';
+                };
+                setTimeout(() => {
+                    this.contacts[this.currentActiveContact].messages.push({
+                        date: '',
+                        text: 'ok',
+                        status: 'received'
+                    })
+                }, 1000);
+            }            
         },
 
         updated() {

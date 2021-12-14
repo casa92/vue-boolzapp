@@ -107,7 +107,6 @@ const app = new Vue(
             showThisContact: function(index) {
                 this.currentActiveContact = index;
             }
-            
         },
 
         updated() {

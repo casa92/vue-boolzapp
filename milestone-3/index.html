@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="root">
+        <div class="container_view">
+        
+            <div class="app_container">
+                <div class="contacts">
+                    <div class="app_top">
+                        <div class="user_logged">
+                            <div class="user_img">
+                                <img src="img/avatar_io.jpg" alt="">
+                            </div>
+                            <div>Nome Utente</div>
+                        </div>
+                        <div class="menu_actions">
+                            <i class="fas fa-circle-notch"></i>
+                            <i class="fas fa-comment-alt"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+                    <div class="notification">
+                        <div class="bell_icon">
+                            <i class="fas fa-bell-slash"></i>
+                        </div>
+                        <div class="text">
+                            <div class="title">
+                                Ricevi notifiche di nuovi messaggi
+                            </div>
+                            <div class="subtitle">
+                                <a href="#">Attiva notifiche dekstop</a>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="search_input">
+                        <div class="search_input_container">
+                            <input type="text" placeholder="Cerca o inizia una nuova chat">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="contacts_list">
+                        <ul>
+                            <li v-if="single_contact.visible === true" @click="showThisContact(index)" v-for="(single_contact, index) in contacts" class="single_contact">
+                                <img :src="thisContactImg + contacts[index].avatar +'.jpg'" alt="">
+                                {{ single_contact.name }}
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="chat">
+                    <div class="app_top">
+                        <div>
+                            <img src="img/avatar_3.jpg" alt="">
+                        </div>
+                        <div>
+                            <i class="fas fa-search"></i>
+                            <i class="fas fa-paperclip"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+
+                        </div>
+                    </div>
+                    
+                    <div class="chat_container" id="chat-container">
+
+                        <div class="prova_data" id="prova-data">Oggi</div>
+                        <!-- v-for="(single_contact, index) in contacts[currentActiveContact]"  -->
+                        <div class="chat_view" id="chat-view">
+
+                            <div v-for="message in contacts[currentActiveContact].messages" :class="message.status">
+                                {{message.text}}
+                            </div>
+
+                            <!-- <div class="sent">ciao</div>
+                            <div class="sent">ciao</div>
+                            <div class="received">ciao a te</div>
+                            <div class="received">ciao a te</div>
+                            <div class="sent">ciao</div>
+                            <div class="sent">ciao</div>
+                            <div class="received"ao a te</div>
+                            <div class="sent">ciao</div>
+                            <div class="received">ciao a te</div>
+                            <div class="sent">ciao</div>
+                            <div class="sent">ciao</div>
+                            <div class="received">ciao a te</div>
+                            <div class="received">ciao a te</div>
+                            <div class="sent">ciao</div>
+                            <div class="sent">ciao</div>
+                            <div class="received">ciao a te</div>
+                            <div class="sent">ciao</div>
+                            <div class="received">ciao a te</div>
+                            <div class="received">ciao a te</div>
+                            <div class="sent">ciao</div>
+                            <div class="sent">ciao</div>
+                            <div class="received">ciao a te</div>
+                            <div class="received">ciao a te</div>
+                            <div class="sent">ciao</div>
+                            <div class="sent">ciao</div>
+                            <div class="received">ciao a te</div>
+                            <div class="sent">ciao</div>
+                            <div class="received">ciao a te</div>
+                            <div class="received">ciao a te</div>
+                            <div class="sent">ciao</div>
+                            <div class="sent">ciao</div>
+                            <div class="received">ciao a te</div>
+                            <div class="received">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet, facere nisi ullam totam animi eius nihil eligendi soluta autem ipsam distinctio, repudiandae iure vitae voluptates a adipisci ad eum quasi.</div>
+                            <div class="sent">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam provident laborum deserunt beatae. Praesentium cupiditate et itaque aliquid aperiam nulla nostrum temporibus ratione, delectus voluptate at, dolorum ab quod eaque.</div>
+                            <div class="sent">ciao</div>
+                            <div class="received">ciao a te</div>
+                            <div class="sent">Sicuro di non aver sbagliato chat?</div>
+                            <div class="received">ciao a te</div> -->
+                        </div>
+                    </div>
+
+                    <div class="chat_input">
+                        <div class="emoticons_icon">
+                            <i class="far fa-smile"></i>
+                        </div>
+                        <div class="input_text">
+                            <input @keyup.enter="sendNewMessage" v-model="newMessage" type="text" placeholder="Scrivi un messaggio" id="input_text_message">
+                        </div>
+                        <div class="record_voice_icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <!-- <button @click="scrollToEnd">aaaaa</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+<script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
