@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="root">
+        <div class="container_view">
+        
+            <div class="app_container">
+                <!-- contacts -->
+                <div class="contacts">
+                    <div class="app_top">
+                        <!-- user image -->
+                        <div class="user_logged">
+                            <div class="user_img">
+                                <img src="img/avatar_io.jpg" alt="">
+                            </div>
+                            <div>Nome Utente</div>
+                        </div>
+                        <!-- contacts actions -->
+                        <div class="menu_actions">
+                            <i class="fas fa-circle-notch"></i>
+                            <i class="fas fa-comment-alt"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+                    <!-- notification -->
+                    <div class="notification">
+                        <div class="bell_icon">
+                            <i class="fas fa-bell-slash"></i>
+                        </div>
+                        <div class="text">
+                            <div class="title">
+                                Ricevi notifiche di nuovi messaggi
+                            </div>
+                            <div class="subtitle">
+                                <a href="#">Attiva notifiche dekstop</a>
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <!-- filter to search contacts -->
+                    <div class="search_input">
+                        <div class="search_input_container">
+                            <input v-model="userFilterText" @keyup="searchFilterText" type="text" placeholder="Cerca o inizia una nuova chat">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <!-- contacts list -->
+                    <div class="contacts_list">
+                        <ul>
+                            <li 
+                                :class="{ 'contact_active': index === currentActiveContact }" 
+                                v-if="contact.visible === true" 
+                                @click="showThisContact(index)" 
+                                v-for="(contact, index) in contacts" 
+                                class="contact"
+                            > 
+                                <img :src="thisContactImg + contacts[index].avatar +'.jpg'" alt="">
+                                <div>
+                                    {{ contact.name }}
+                                    <div class="last_message_preview" :class="{ 'contact_active_color_gray_text': index === currentActiveContact }" >
+                                        {{singleContactLastMessageText(contact)}}
+                                    </div>
+                                </div>
+                               
+                                <div class="last_message_date" :class="{ 'contact_active_color_gray_text': index === currentActiveContact }">
+                                    {{ singleContactLastMessageDate(contact) }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- chat -->
+                <div class="chat">
+                    <div class="app_top">
+                        <!-- active contact preview -->
+                        <div class="user_contact_active">
+                            <img :src="thisContactImg + contacts[currentActiveContact].avatar +'.jpg'" alt="">
+                            <div>
+                                {{ contacts[currentActiveContact].name}}
+                                <div class="last_access" v-for="(contact, index) in contacts" v-if="index === currentActiveContact">
+                                    {{ singleContactLastMessageDate(contact) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <i class="fas fa-search"></i>
+                            <i class="fas fa-paperclip"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+
+                        </div>
+                    </div>
+                    <!-- single contact chat -->
+                    <div class="chat_container" id="chat-container">
+
+                        <div class="prova_data" id="prova-data">Oggi</div>
+                        <div class="chat_view" id="chat-view">
+                            <!-- single message -->
+                            <div v-for="(message, index) in contacts[currentActiveContact].messages" class="message" :class="message.status" @mouseleave="MouseLeaveMessageActive">
+                                {{message.text}}
+                                <span class="angle_down_icon" @click="thisMessageIsActive(index)">
+                                    <i class="fas fa-chevron-down prova_r">
+                                        <div class="prova_div" v-if="currentActiveMessage === index">
+                                            <ul>
+                                                <li @click="deleteMessage(index)" class="single_choice">
+                                                    cancellla messaggio
+                                                </li>
+                                                <li class="single_choice">
+                                                    invia messaggio
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </i>
+                                </span>
+                                <span class="date_message">
+                                    {{message.date}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- bottom chat actions-->
+                    <div class="chat_input">
+                        <div class="emoticons_icon">
+                            <i class="far fa-smile"></i>
+                        </div>
+                        <!-- input text message -->
+                        <div class="input_text">
+                            <input @keyup.enter="sendNewMessage" v-model="newMessage" type="text" placeholder="Scrivi un messaggio" id="input_text_message">
+                        </div>
+                        <div class="record_voice_icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <!-- <button @click="scrollToEnd">aaaaa</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
