@@ -156,21 +156,52 @@ const app = new Vue(
                 this.contacts[this.currentActiveContact].messages.splice(index, 1);
             },
             //funzione che estrae la data dell'ultimo messaggio presente nel array dei contatti
+            // singleContactLastMessageDate: function(contact) {
+            //     const contactMessages = contact.messages;
+            //     return contactMessages[contactMessages.length - 1].date;
+            // },
+
             singleContactLastMessageDate: function(contact) {
                 const contactMessages = contact.messages;
-                return contactMessages[contactMessages.length - 1].date;
+                let lastMessageDate;
+                if (contactMessages.length - 1 >= 0) {
+                    lastMessageDate = contactMessages[contactMessages.length - 1].date;
+                    
+                } else {
+                    lastMessageDate = '';
+                }
+                return lastMessageDate;
             },
             //funzione che estrae l'ultimo messagio dell'array e va a mostrare l'anteprima dei primi 25 caratteri, oltre vengono inseriti '...'
+            // singleContactLastMessageText: function(contact) {
+            //     const contactMessages = contact.messages;
+            //     let lastMessage = contactMessages[contactMessages.length - 1].text;
+            //     let cutMessage = lastMessage.slice(0, 25);
+            //     if(cutMessage.length > 24) {
+            //         cutMessage  += '...';
+            //     } else {
+            //         cutMessage = 'ciao';
+            //     }
+            //     return cutMessage;
+            // }
+
             singleContactLastMessageText: function(contact) {
                 const contactMessages = contact.messages;
-                const lastMessage = contactMessages[contactMessages.length - 1].text;
-                let cutMessage = lastMessage.slice(0, 25);
-                if(cutMessage.length > 24) {
+                let lastMessage;
+                if (contactMessages.length - 1 >= 0) {
+                    lastMessage = contactMessages[contactMessages.length - 1].text;
+                } else {
+                    lastMessage = 'Non sono presenti messaggi';
+                }
+                let cutMessage = lastMessage.slice(0, 26);
+                if(cutMessage.length > 26) {
                     cutMessage  += '...';
+                } else {
+                    cutMessage = lastMessage;
                 }
                 return cutMessage;
             }
-            
+        
         },
         //all'invio di ogni nuovo messaggio la pagina si scrolla verso il basso in automatico
         updated() {
